@@ -22,7 +22,15 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
+      ],
     },
+  },
+  {
+    files: ['**/__tests__/**', '**/*.test.{ts,tsx}', 'e2e/**'],
+    rules: { '@typescript-eslint/no-non-null-assertion': 'off' },
   },
   prettier,
 );

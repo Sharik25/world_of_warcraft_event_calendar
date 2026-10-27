@@ -1,0 +1,105 @@
+{
+  "year": 2026,
+  "notes": "Server-time dates for Anniversary realms. Only entries with an Anniversary-specific source are verified.",
+  "events": {
+    "lunar-festival": [
+      {
+        "start": "2026-02-16T10:00",
+        "end": "2026-03-02T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "love-is-in-the-air": [
+      {
+        "start": "2026-02-09T10:00",
+        "end": "2026-02-23T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "noblegarden": [
+      {
+        "start": "2026-04-06T10:00",
+        "end": "2026-04-13T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "childrens-week": [
+      {
+        "start": "2026-04-27T10:00",
+        "end": "2026-05-04T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "midsummer": [
+      {
+        "start": "2026-06-21T10:00",
+        "end": "2026-07-05T10:00",
+        "verified": true,
+        "source": "https://www.iggm.com/news/wow-tbc-classic-anniversary-midsummer-fire-festival-guide-earn-gold-ahune-daily",
+        "note": "Dates confirmed for TBC Anniversary. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "fireworks-spectacular": [
+      {
+        "start": "2026-07-04T10:00",
+        "end": "2026-07-05T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "harvest-festival": [
+      {
+        "start": "2026-09-21T10:00",
+        "end": "2026-09-28T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "brewfest": [
+      {
+        "start": "2026-09-20T10:00",
+        "end": "2026-10-06T10:00",
+        "verified": false,
+        "source": "https://www.wowhead.com/guide/world-events/holidays/brewfest",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "hallows-end": [
+      {
+        "start": "2026-10-18T10:00",
+        "end": "2026-11-01T10:00",
+        "verified": true,
+        "source": "https://www.warcrafttavern.com/tbc/news/the-hallows-end-holiday-event-is-live-in-tbc-classic-anniversary-edition/",
+        "note": "Live on Anniversary realms by Oct 18; ends Nov 1. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "winter-veil": [
+      {
+        "start": "2026-12-15T10:00",
+        "end": "2027-01-02T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "new-year": [
+      {
+        "start": "2026-12-31T10:00",
+        "end": "2027-01-01T10:00",
+        "verified": false,
+        "source": "https://www.darmory.com/events",
+        "note": "Dates from the 2026 retail calendar; not yet confirmed for Anniversary realms. Time of day assumed (10:00 server time)."
+      }
+    ]
+  }
+}

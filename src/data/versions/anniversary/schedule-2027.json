@@ -1,0 +1,54 @@
+{
+  "year": 2027,
+  "notes": "Only holidays with a fixed yearly window are listed, all unconfirmed. Holidays that move each year (Lunar Festival, Love is in the Air, Noblegarden, Children's Week, Harvest Festival) are left out until their dates are published.",
+  "events": {
+    "midsummer": [
+      {
+        "start": "2027-06-21T10:00",
+        "end": "2027-07-05T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "fireworks-spectacular": [
+      {
+        "start": "2027-07-04T10:00",
+        "end": "2027-07-05T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "brewfest": [
+      {
+        "start": "2027-09-20T10:00",
+        "end": "2027-10-06T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "hallows-end": [
+      {
+        "start": "2027-10-18T10:00",
+        "end": "2027-11-01T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "winter-veil": [
+      {
+        "start": "2027-12-15T10:00",
+        "end": "2028-01-02T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ],
+    "new-year": [
+      {
+        "start": "2027-12-31T10:00",
+        "end": "2028-01-01T10:00",
+        "verified": false,
+        "note": "Expected from this holiday's fixed yearly window; not yet confirmed. Time of day assumed (10:00 server time)."
+      }
+    ]
+  }
+}

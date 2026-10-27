@@ -1,0 +1,5 @@
+/** Everything the build scripts need from `src/`, loaded in one go through Vite's module runner. */
+export { eventCatalog, eventDefinitions } from '../../src/data/events';
+export { versions } from '../../src/data/versions';
+export { validateData } from '../../src/data/validate';
+export { themeIds } from '../../src/themes';

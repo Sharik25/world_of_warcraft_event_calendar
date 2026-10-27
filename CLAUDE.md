@@ -39,3 +39,10 @@ Node 22 is required (`nvm use`; see `.nvmrc`). The system default Node 18 is too
 
 - React 18, TypeScript strict (`noUncheckedIndexedAccess` on).
 - Routing uses **React Router v7** (`react-router` package) in data-router mode, instead of v6 as written in PLAN.md. The API is the same as v6, and v6 has unpatched security advisories.
+- Build scripts (`scripts/*.ts`, run with `tsx`) load app data through `scripts/lib/load-data.ts`, which uses Vite's module runner. That keeps `import.meta.glob` and the `@/` alias working outside Vite.
+
+## Data notes
+
+- Explicit dates live in `src/data/versions/<id>/schedule-<year>.json`. `version.ts` globs them, so adding a year only means adding a file.
+- Set `verified: true` only with a source specific to that version. Every unverified date needs a `note` saying what's unconfirmed (a test enforces this).
+- Anniversary assumptions to re-check in-game: US event clock = Pacific time; holiday start/end time = 10:00 server; Darkmoon Faire opens 00:00 Monday after the first Friday, location rotation unknown.
