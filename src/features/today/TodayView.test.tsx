@@ -157,7 +157,9 @@ describe('Today view', () => {
   it('ticks the countdown each minute', async () => {
     vi.useRealTimers();
     vi.useFakeTimers({ toFake: ['Date', 'setTimeout', 'clearTimeout'] });
-    vi.setSystemTime(new Date('2026-10-27T10:59:30Z'));
+    // 4d 22h 30m before the end: half an hour away from any display boundary, so scheduling
+    // drift on slow machines can't change the expected text.
+    vi.setSystemTime(new Date('2026-10-27T10:30:00Z'));
     renderRoute('/anniversary/today');
     await vi.waitFor(() => screen.getByText('Ends in 4d 22h'));
     act(() => {
