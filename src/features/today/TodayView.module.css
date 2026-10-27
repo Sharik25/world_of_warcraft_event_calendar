@@ -107,12 +107,19 @@
   color: var(--color-accent);
 }
 
+/* Details + Add to calendar, centered under the card content. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
 .detailsButton {
   display: grid;
   place-items: center;
-  width: fit-content;
   min-height: 48px;
-  margin: var(--space-4) auto 0; /* centered under the card content */
   padding: 0 var(--space-5);
   font-family: var(--font-display);
   font-weight: 700;

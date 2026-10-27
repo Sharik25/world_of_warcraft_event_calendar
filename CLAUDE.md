@@ -57,3 +57,10 @@ Node 22 is required (`nvm use`; see `.nvmrc`). The system default Node 18 is too
 - Several copies of the same art can be on a page: always render through `uniqueSvgIds()`, or gradients break when the first copy is hidden.
 - Mobile: bottom-corner art moves from the fixed layer into the end-of-page scene so it never sits behind text.
 - `src/themes/__tests__/contrast.test.ts` enforces WCAG AA per theme and the 150 KB budget. Fix a failing theme by adjusting its tokens, not the test.
+
+## Calendar export (Phase 6)
+
+- `src/engine/ics.ts` is our own small RFC 5545 writer, not the `ics` package from PLAN.md. That avoids three runtime dependencies in the bundle. Output is validated in tests by parsing it with `ical.js` (dev dependency).
+- Recurring events are exported as individual VEVENTs, never RRULE, because a UTC RRULE would drift by an hour across DST.
+- UIDs are `Occurrence.key@innkeepers-almanac`, so they are stable across builds and re-imports.
+- `npm run build-ics` (also run by `dev`, `build` and the Playwright server) writes `public/calendars/<version>-<region>.ics`, covering −1 to +18 months. Set `SITE_URL` (Netlify's `URL` is used automatically) so event descriptions link back to the app.

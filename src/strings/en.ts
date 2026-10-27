@@ -50,8 +50,6 @@ export const strings = {
     today: 'Today',
   },
   eventSheet: {
-    yourTime: (zone: string) => `Your time (${zone})`,
-    serverTime: (region: string, zone: string) => `${region} server time (${zone})`,
     location: 'Location',
     highlights: 'Highlights',
     notes: 'Notes',
@@ -67,6 +65,23 @@ export const strings = {
     world: 'World event',
     pvp: 'PvP',
     milestone: 'Milestone',
+  },
+  calendarExport: {
+    addToCalendar: 'Add to calendar',
+    google: 'Google Calendar',
+    appleOutlook: 'Apple / Outlook (.ics)',
+    tentative: 'tentative',
+    subscribe: 'Subscribe to all events',
+    subscribeHint: (version: string, region: string) =>
+      `A live calendar of every ${version} event in ${region} server time. Your calendar app keeps it up to date.`,
+    feedUrl: 'Feed address',
+    copy: 'Copy',
+    copied: 'Copied!',
+    openApple: 'Apple Calendar',
+    openGoogle: 'Google Calendar',
+    outlookHow: 'Outlook: Add calendar → Subscribe from web, then paste the feed address.',
+    downloadFeed: 'Download .ics instead',
+    needsHttps: 'Subscriptions work on the published site (HTTPS). Here you can download the file.',
   },
   topBar: {
     versionChip: (version: string, region: string) => `${version} · ${region}`,

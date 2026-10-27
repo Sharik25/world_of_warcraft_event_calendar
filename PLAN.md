@@ -356,7 +356,7 @@ Non-dominant active events are still listed (secondary cards / small markers). U
 - Mobile: colored dots under numerals (max 3), tap a day → Day sheet listing its events.
 - Today has a glowing gold border.
 
-**Event sheet**: bottom sheet on mobile (drag to close), right side panel on desktop. Contents: name, dates (local + server time), location (e.g., DMF rotation), summary, highlights, links, unconfirmed marker, **Add to calendar** buttons.
+**Event sheet**: bottom sheet on mobile (drag to close), right side panel on desktop. Contents (rev. 3): name, category, unconfirmed marker, countdown, location (e.g., DMF rotation), summary, highlights, notes, links.
 
 ### 8.3 Action bar (classic action-bar feel)
 - Fixed bottom; carved frame; square slot buttons with icon + label; active slot has gold glow.
@@ -570,6 +570,10 @@ Items 1–3 → Phase 4. Item 4 → Phase 5.
 **Rev. 2 (2026-10-27, after reviewing Phase 5):**
 1. "Also on this day" cards are styled in their own event's theme (accent stripe and tint, emblem medallion, countdown pill, chevron).
 2. Minimalist decorations: keep garlands/edge strips, backgrounds, particles (stars, snow, embers…) and small animated accents; remove large corner objects (moons, tents, tickets, pumpkins, trees, bonfires, kegs…). Each theme gets a small `emblem` for medallions.
+
+**Rev. 3 (2026-10-27, after reviewing Phase 6):**
+1. Event sheet (side panel) is compact: no "Your time" / server-time rows and no Add-to-calendar section; keeps badges, countdown, location, summary, highlights, notes and links. Add to calendar lives on the hero card.
+2. No "all dates" series download; single-event export (Google / .ics) and the subscription feeds remain.
 
 ## 17. Open decisions (defaults chosen — change if needed)
 

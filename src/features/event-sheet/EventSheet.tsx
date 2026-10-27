@@ -5,7 +5,6 @@ import { expandOccurrences } from '@/engine/expand';
 import { addDays, daysRange } from '@/engine/time';
 import { Countdown } from '@/features/common/Countdown';
 import { UnconfirmedMarker } from '@/features/common/UnconfirmedMarker';
-import { formatRange, zoneLabel } from '@/lib/format';
 import { strings } from '@/strings/en';
 import { Badge, Icon, Sheet, ThemeScope } from '@/ui';
 import styles from './EventSheet.module.css';
@@ -58,27 +57,12 @@ export function EventSheet({
             <p className={styles.countdown}>
               <Countdown occurrence={occurrence} now={now} timeZone={userTimeZone} />
             </p>
-            <dl className={styles.times}>
-              <dt>{strings.eventSheet.yourTime(zoneLabel(occurrence.start, userTimeZone))}</dt>
-              <dd>
-                <time dateTime={occurrence.start.toISOString()}>
-                  {formatRange(occurrence.start, occurrence.end, userTimeZone)}
-                </time>
-              </dd>
-              <dt>
-                {strings.eventSheet.serverTime(
-                  region.label,
-                  zoneLabel(occurrence.start, region.timeZone),
-                )}
-              </dt>
-              <dd>{formatRange(occurrence.start, occurrence.end, region.timeZone)}</dd>
-              {occurrence.location && (
-                <>
-                  <dt>{strings.eventSheet.location}</dt>
-                  <dd>{occurrence.location}</dd>
-                </>
-              )}
-            </dl>
+            {occurrence.location && (
+              <dl className={styles.times}>
+                <dt>{strings.eventSheet.location}</dt>
+                <dd>{occurrence.location}</dd>
+              </dl>
+            )}
           </>
         ) : (
           <p>{strings.eventSheet.notFound}</p>

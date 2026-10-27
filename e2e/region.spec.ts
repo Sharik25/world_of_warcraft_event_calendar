@@ -8,7 +8,7 @@ test('region switcher toggles Americas/Europe and remembers the choice', async (
   await page.getByRole('button', { name: 'Settings' }).click();
   const sheet = page.getByRole('dialog', { name: 'Settings & info' });
   await sheet.getByRole('radio', { name: 'Americas' }).click();
-  await expect(sheet.getByText('Americas server time')).toBeVisible();
+  await expect(sheet.getByText('Americas server time', { exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
 
   await expect(page.getByRole('button', { name: 'Anniversary · Americas' })).toBeVisible();

@@ -49,8 +49,8 @@ describe('Week view', () => {
     const dialog = await screen.findByRole('dialog', {
       name: 'Stranglethorn Fishing Extravaganza',
     });
-    // The sheet shows Nov 1's contest (not the next one): 14:00 CET.
-    expect(within(dialog).getAllByText(/Sun, Nov 1, 14:00–16:00/).length).toBeGreaterThan(0);
+    // The sheet is about Nov 1's contest (14:00 CET = 13:00Z), not a later one.
+    expect(within(dialog).getByText('Starts in 5d 2h')).toBeInTheDocument();
   });
 
   it('desktop: ribbons for multi-day events and timed blocks for short ones', async () => {

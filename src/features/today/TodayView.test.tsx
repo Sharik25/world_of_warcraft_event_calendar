@@ -62,9 +62,10 @@ describe('Today view', () => {
 
     const dialog = await screen.findByRole('dialog', { name: "Hallow's End" });
     expect(router.state.location.search).toBe('?event=hallows-end');
-    // Both zones are Paris; the label reflects the start (Oct 18, still summer time).
-    expect(within(dialog).getByText('Your time (GMT+2)')).toBeInTheDocument();
-    expect(within(dialog).getByText('Europe server time (GMT+2)')).toBeInTheDocument();
+    // Compact sheet (rev. 3): countdown and details, no time tables or export buttons.
+    expect(within(dialog).getByText('Ends in 4d 22h')).toBeInTheDocument();
+    expect(within(dialog).queryByText(/^(Europe|Americas) server time/)).not.toBeInTheDocument();
+    expect(within(dialog).queryByRole('button', { name: /\.ics/ })).not.toBeInTheDocument();
     expect(within(dialog).getByRole('link', { name: /Date source/ })).toHaveAttribute(
       'href',
       expect.stringContaining('warcrafttavern.com'),

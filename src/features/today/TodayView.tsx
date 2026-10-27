@@ -11,6 +11,7 @@ import { useOccurrences } from '@/hooks/useOccurrences';
 import { formatDistance, formatRange } from '@/lib/format';
 import { strings } from '@/strings/en';
 import { Icon, ParchmentCard } from '@/ui';
+import { AddToCalendar } from '@/features/calendar-export/AddToCalendar';
 import { DateNumeral } from './DateNumeral';
 import { EventCard } from './EventCard';
 import styles from './TodayView.module.css';
@@ -105,13 +106,16 @@ export function TodayView() {
                   ))}
                 </ul>
               )}
-              <Link
-                to={eventHref(dominantDef.id)}
-                className={styles.detailsButton}
-                aria-label={strings.today.detailsFor(dominantDef.name)}
-              >
-                {strings.today.details}
-              </Link>
+              <div className={styles.actions}>
+                <Link
+                  to={eventHref(dominantDef.id)}
+                  className={styles.detailsButton}
+                  aria-label={strings.today.detailsFor(dominantDef.name)}
+                >
+                  {strings.today.details}
+                </Link>
+                <AddToCalendar occurrence={dominant} />
+              </div>
             </ParchmentCard>
           </>
         ) : (

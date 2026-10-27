@@ -15,7 +15,8 @@ test('event sheet opens and closes (button, Escape, back to clean URL)', async (
   const dialog = page.getByRole('dialog', { name: "Hallow's End" });
   await expect(dialog).toBeVisible();
   await expect(page).toHaveURL(/\?event=hallows-end$/);
-  await expect(dialog.getByText(/Europe server time/)).toBeVisible();
+  await expect(dialog.getByText('Ends in 4d 22h')).toBeVisible();
+  await expect(dialog.getByRole('link', { name: /Warcraft Wiki/ })).toBeVisible();
 
   await dialog.getByRole('button', { name: 'Close' }).click();
   await expect(dialog).toBeHidden();
