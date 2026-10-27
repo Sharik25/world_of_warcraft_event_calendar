@@ -1,0 +1,23 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.footer {
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  text-align: center;
+  color: var(--color-ink-on-dark-muted);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
