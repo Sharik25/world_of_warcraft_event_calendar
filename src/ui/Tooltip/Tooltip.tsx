@@ -1,6 +1,8 @@
 import {
   cloneElement,
   useId,
+  useLayoutEffect,
+  useRef,
   useState,
   type FocusEvent,
   type KeyboardEvent,
@@ -29,7 +31,21 @@ interface TooltipProps {
 export function Tooltip({ content, children, placement = 'top' }: TooltipProps) {
   const id = useId();
   const [open, setOpen] = useState(false);
+  const tipRef = useRef<HTMLSpanElement>(null);
   const props = children.props;
+
+  // Keep the open tip inside the viewport (triggers near the screen edge on phones).
+  useLayoutEffect(() => {
+    const tip = tipRef.current;
+    const viewport = document.documentElement.clientWidth;
+    if (!open || !tip || !viewport) return;
+    const margin = 8;
+    tip.style.setProperty('--shift', '0px');
+    const { left, right } = tip.getBoundingClientRect();
+    const shift =
+      right > viewport - margin ? viewport - margin - right : left < margin ? margin - left : 0;
+    tip.style.setProperty('--shift', `${shift}px`);
+  }, [open]);
 
   const trigger = cloneElement(children, {
     'aria-describedby': [props['aria-describedby'], id].filter(Boolean).join(' '),
@@ -59,6 +75,7 @@ export function Tooltip({ content, children, placement = 'top' }: TooltipProps) 
     <span className={styles.anchor}>
       {trigger}
       <span
+        ref={tipRef}
         id={id}
         role="tooltip"
         className={styles.tip}

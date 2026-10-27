@@ -11,6 +11,9 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
+    // Deterministic "user": Paris → EU region is guessed. Tests pin the clock with page.clock.
+    timezoneId: 'Europe/Paris',
+    locale: 'en-US',
   },
   projects: [
     { name: 'mobile', use: { ...devices['iPhone 13'] } },

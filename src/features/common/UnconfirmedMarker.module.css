@@ -1,0 +1,24 @@
+.marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.info {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: help;
+}
+
+/* On a dark themed background (hero) the default dark-red text would fail contrast. */
+.marker.onDark .badge {
+  color: #ffd2c4;
+  background: rgb(176 58 30 / 0.35);
+}

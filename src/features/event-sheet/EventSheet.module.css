@@ -1,0 +1,86 @@
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.countdown {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+}
+
+.times {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+}
+
+.times dt {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.times dd {
+  margin: 0 0 var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.summary {
+  margin: var(--space-4) 0;
+  font-size: var(--text-lg);
+  line-height: 1.45;
+}
+
+.heading {
+  margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+}
+
+.highlights {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.highlights li::marker {
+  content: '▸ ';
+  color: var(--color-accent);
+}
+
+.note {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

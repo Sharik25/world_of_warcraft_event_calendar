@@ -3,6 +3,9 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Deterministic "user" time zone for component tests (workers inherit it at spawn).
+if (process.env.VITEST) process.env.TZ = 'Europe/Paris';
+
 export default defineConfig({
   plugins: [react()],
   resolve: {

@@ -1,0 +1,26 @@
+.section {
+  display: grid;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+}
+
+.section + .section {
+  padding-top: var(--space-5);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+}
+
+.text,
+.legal {
+  margin: 0;
+}
+
+.legal {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}

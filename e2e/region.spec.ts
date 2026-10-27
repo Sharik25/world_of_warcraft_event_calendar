@@ -1,24 +1,26 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test('region switcher toggles Americas/Europe and remembers the choice', async ({ page }) => {
-  await page.goto('/');
-  const americas = page.getByRole('radio', { name: 'Americas' });
-  const europe = page.getByRole('radio', { name: 'Europe' });
+  await page.goto('/anniversary/today');
+  await expect(page.getByRole('button', { name: 'Anniversary · Europe' })).toBeVisible();
+  await expect(page.getByText('Ends in 4d 22h')).toBeVisible();
 
-  await europe.click();
-  await expect(europe).toBeChecked();
-  await expect(page.getByText('Europe server time')).toBeVisible();
+  await page.getByRole('button', { name: 'Settings' }).click();
+  const sheet = page.getByRole('dialog', { name: 'Settings & info' });
+  await sheet.getByRole('radio', { name: 'Americas' }).click();
+  await expect(sheet.getByText('Americas server time')).toBeVisible();
+  await page.keyboard.press('Escape');
 
-  await americas.click();
-  await expect(americas).toBeChecked();
-  await expect(page.getByText('Americas server time')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Anniversary · Americas' })).toBeVisible();
+  await expect(page.getByText('Ends in 5d 7h')).toBeVisible();
 
   await page.reload();
-  await expect(americas).toBeChecked();
+  await expect(page.getByRole('button', { name: 'Anniversary · Americas' })).toBeVisible();
 });
 
 test('region options are at least 48px tall', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/anniversary/today');
+  await page.getByRole('button', { name: 'Settings' }).click();
   const box = await page.getByText('Americas', { exact: true }).boundingBox();
   expect(box?.height).toBeGreaterThanOrEqual(48);
 });
