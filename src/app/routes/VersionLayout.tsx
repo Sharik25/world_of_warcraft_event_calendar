@@ -251,7 +251,12 @@ export function VersionLayout() {
         timeZone={userTz}
         onSelect={switchTo}
       />
-      <MoreSheet open={moreOpen} onClose={() => setMoreOpen(false)} version={version} />
+      <MoreSheet
+        open={moreOpen}
+        onClose={() => setMoreOpen(false)}
+        version={version}
+        catalog={catalog}
+      />
     </ThemeScope>
   );
 }

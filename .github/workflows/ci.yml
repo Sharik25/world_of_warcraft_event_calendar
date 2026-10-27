@@ -1,0 +1,31 @@
+# Quality gates (PLAN.md §16): typecheck, lint, data validation, unit tests with coverage,
+# build (incl. feeds) and end-to-end tests on mobile + desktop.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npx prettier --check .
+      - run: npm run coverage
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/

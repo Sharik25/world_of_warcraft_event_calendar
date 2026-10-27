@@ -6,6 +6,7 @@ export { Frame } from './Frame/Frame';
 export { Icon } from './Icon/Icon';
 export { iconNames, type IconName } from './Icon/icons';
 export { ParchmentCard } from './ParchmentCard/ParchmentCard';
+export { Segmented, type SegmentedOption } from './Segmented/Segmented';
 export { Sheet } from './Sheet/Sheet';
 export { ThemeDecorations } from './ThemeDecorations/ThemeDecorations';
 export { ThemeScope } from './ThemeScope/ThemeScope';

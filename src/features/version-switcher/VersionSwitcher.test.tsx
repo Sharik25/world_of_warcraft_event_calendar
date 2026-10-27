@@ -99,7 +99,7 @@ describe('WoW: Forever before and after launch', () => {
     await screen.findByRole('heading', { level: 1, name: 'WoW: Forever' });
     await user.click(screen.getByRole('button', { name: 'Settings' }));
     const sheet = await screen.findByRole('dialog', { name: 'Settings & info' });
-    expect(within(sheet).queryByRole('radio')).not.toBeInTheDocument();
+    expect(within(sheet).queryByRole('group', { name: 'Server region' })).not.toBeInTheDocument();
     expect(
       within(sheet).queryByRole('heading', { name: 'Subscribe to all events' }),
     ).not.toBeInTheDocument();

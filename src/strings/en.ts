@@ -113,6 +113,19 @@ export const strings = {
   settings: {
     region: 'Server region',
     serverTime: (region: string) => `${region} server time`,
+    display: 'Display',
+    timeDisplay: 'Show times in',
+    localTime: 'Your time',
+    serverTimeShort: 'Server time',
+    weekStart: 'Week starts on',
+    sunday: 'Sunday',
+    monday: 'Monday',
+    motion: 'Animations',
+    motionSystem: 'System',
+    motionReduced: 'Reduced',
+    motionFull: 'Full',
+    eventsShown: 'Events shown',
+    eventsShownHint: 'Hidden kinds of events disappear from every view.',
   },
   legal: {
     disclaimer:

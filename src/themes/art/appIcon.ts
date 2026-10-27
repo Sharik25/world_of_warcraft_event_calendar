@@ -1,0 +1,30 @@
+import { INK } from './helpers';
+
+/**
+ * App icon: a parchment calendar page with gold binding and a candle flame, on dark wood with an
+ * ember glow. `maskable` draws edge-to-edge and keeps the art inside the 80% safe zone.
+ */
+export function appIcon({ maskable = false }: { maskable?: boolean } = {}): string {
+  const scale = maskable ? 0.78 : 1;
+  const art = `<g transform="translate(256 256) scale(${scale}) translate(-256 -256)">
+<rect x="112" y="132" width="288" height="272" rx="30" fill="url(#ic-paper)" stroke="${INK}" stroke-width="10"/>
+<path d="M112 162 A30 30 0 0 1 142 132 H370 A30 30 0 0 1 400 162 V204 H112 Z" fill="url(#ic-gold)" stroke="${INK}" stroke-width="10" stroke-linejoin="round"/>
+<g fill="${INK}"><rect x="170" y="100" width="26" height="70" rx="13"/><rect x="316" y="100" width="26" height="70" rx="13"/></g>
+<g fill="#f6dc8c"><rect x="176" y="106" width="8" height="36" rx="4"/><rect x="322" y="106" width="8" height="36" rx="4"/></g>
+<g fill="#b98a4a" opacity=".45"><circle cx="160" cy="246" r="9"/><circle cx="352" cy="246" r="9"/><circle cx="160" cy="364" r="9"/><circle cx="352" cy="364" r="9"/></g>
+<path d="M256 222 C290 262 304 290 304 318 C304 348 282 370 256 370 C230 370 208 348 208 318 C208 296 220 276 236 256 C238 276 246 286 256 290 C262 268 260 246 256 222 Z" fill="url(#ic-flame)" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+<path d="M256 292 C268 306 274 318 274 330 C274 344 266 354 256 354 C246 354 238 344 238 330 C238 320 244 310 256 292 Z" fill="#fff2a8"/>
+</g>`;
+  const bg = maskable
+    ? '<rect width="512" height="512" fill="url(#ic-bg)"/>'
+    : '<rect x="8" y="8" width="496" height="496" rx="112" fill="url(#ic-bg)" stroke="#d4a64a" stroke-width="10"/>';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+<radialGradient id="ic-bg" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="#5a3420"/><stop offset=".55" stop-color="#2e1c10"/><stop offset="1" stop-color="#160d07"/></radialGradient>
+<radialGradient id="ic-glow" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="#ff9a3c" stop-opacity=".55"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
+<linearGradient id="ic-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e8c8"/><stop offset="1" stop-color="#e0c493"/></linearGradient>
+<linearGradient id="ic-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6dc8c"/><stop offset="1" stop-color="#c9963a"/></linearGradient>
+<linearGradient id="ic-flame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd25a"/><stop offset=".6" stop-color="#ff8a1f"/><stop offset="1" stop-color="#c2410c"/></linearGradient>
+</defs>
+${bg}<circle cx="256" cy="300" r="210" fill="url(#ic-glow)"/>${art}</svg>`;
+}
