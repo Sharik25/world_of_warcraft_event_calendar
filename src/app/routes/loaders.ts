@@ -11,6 +11,7 @@ const repository = bundledRepository;
 
 export interface VersionLoaderData {
   version: VersionConfig;
+  versions: VersionConfig[];
   catalog: EventCatalog;
 }
 
@@ -25,7 +26,11 @@ export async function rootLoader() {
 export async function versionLoader({ params }: LoaderFunctionArgs): Promise<VersionLoaderData> {
   const version = params.versionId ? await repository.getVersion(params.versionId) : undefined;
   if (!version) throw new Response('Unknown version', { status: 404 });
-  return { version, catalog: await repository.getCatalog() };
+  const [versions, catalog] = await Promise.all([
+    repository.getVersions(),
+    repository.getCatalog(),
+  ]);
+  return { version, versions, catalog };
 }
 
 export function isValidLocalDate(date: string | undefined): date is string {

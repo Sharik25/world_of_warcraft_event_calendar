@@ -1,9 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Outlet, useLoaderData, useMatches, useNavigate, useParams } from 'react-router';
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useMatches,
+  useNavigate,
+  useParams,
+} from 'react-router';
 import { startOfWeek } from '@/engine/calendar';
 import { findRegion } from '@/engine/expand';
 import { addDays, addMonths, localDateOf, monthOf, type LocalDate } from '@/engine/time';
+import { switchVersionPath, versionStatus } from '@/engine/version';
 import { MoreSheet } from '@/features/settings/MoreSheet';
+import { LaunchScreen } from '@/features/version-switcher/LaunchScreen';
+import { VersionPicker } from '@/features/version-switcher/VersionPicker';
 import { dominantThemeId } from '@/hooks/useDominantTheme';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useNow } from '@/hooks/useNow';
@@ -29,12 +39,15 @@ import styles from './VersionLayout.module.css';
 
 /** Shell for /:versionId/*: themed by the viewed date's dominant event, with top bar + action bar. */
 export function VersionLayout() {
-  const { version, catalog } = useLoaderData() as VersionLoaderData;
+  const { version, versions, catalog } = useLoaderData() as VersionLoaderData;
   const params = useParams();
   const matches = useMatches();
+  const location = useLocation();
   const navigate = useNavigate();
   const now = useNow();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const status = versionStatus(version, now);
 
   const setVersion = useSettings((s) => s.setVersion);
   const hiddenCategories = useSettings((s) => s.hiddenCategories);
@@ -132,7 +145,7 @@ export function VersionLayout() {
     '2': () => navigate(view.hrefFor('week', viewDate)),
     '3': () => navigate(view.hrefFor('month', viewDate)),
     t: () => navigate(view.nav.current),
-    v: () => setMoreOpen(true),
+    v: () => setPickerOpen((open) => !open),
     ArrowLeft: () => navigate(view.nav.prev),
     ArrowRight: () => navigate(view.nav.next),
   });
@@ -142,13 +155,29 @@ export function VersionLayout() {
     () => navigate(view.nav.next),
   );
 
+  const switchTo = (versionId: string) => {
+    setPickerOpen(false);
+    if (versionId !== version.id)
+      navigate(switchVersionPath(location.pathname, version.id, versionId));
+  };
+  const liveFallback = versions.find(
+    (v) => v.id !== version.id && versionStatus(v, now) === 'live',
+  );
+
   return (
     <ThemeScope themeId={themeId} withBackground className={styles.shell}>
       <ThemeDecorations decorations={theme.decorations} reducedMotion={reducedMotion} />
       {theme.particles && !reducedMotion && <AmbientParticles kind={theme.particles} />}
 
       <header className={styles.topBar}>
-        <button type="button" className={styles.versionChip} onClick={() => setMoreOpen(true)}>
+        <button
+          type="button"
+          className={styles.versionChip}
+          onClick={() => setPickerOpen((open) => !open)}
+          aria-haspopup="dialog"
+          aria-expanded={pickerOpen}
+          data-version-trigger
+        >
           {strings.topBar.versionChip(version.shortName, region.label)}
         </button>
         <button
@@ -162,7 +191,11 @@ export function VersionLayout() {
       </header>
 
       <main className={styles.main} {...swipe}>
-        <Outlet context={view} />
+        {status === 'upcoming' ? (
+          <LaunchScreen view={view} fallback={liveFallback} />
+        ) : (
+          <Outlet context={view} />
+        )}
       </main>
 
       <footer className={styles.footer}>
@@ -201,11 +234,23 @@ export function VersionLayout() {
           icon="version"
           label={strings.actionBar.version}
           keybind="V"
-          onClick={() => setMoreOpen(true)}
+          onClick={() => setPickerOpen((open) => !open)}
           aria-haspopup="dialog"
+          aria-expanded={pickerOpen}
+          active={pickerOpen}
+          data-version-trigger
         />
       </ActionBar>
 
+      <VersionPicker
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        versions={versions}
+        currentId={version.id}
+        now={now}
+        timeZone={userTz}
+        onSelect={switchTo}
+      />
       <MoreSheet open={moreOpen} onClose={() => setMoreOpen(false)} version={version} />
     </ThemeScope>
   );

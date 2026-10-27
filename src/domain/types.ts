@@ -83,6 +83,8 @@ export interface VersionConfig {
   shortName: string; // "Anniversary"
   status: 'live' | 'upcoming' | 'retired';
   launchDate?: string; // ISO
+  /** One or two sentences shown on the upcoming-version screen. */
+  summary?: string;
   regions: Region[];
   defaultRegionId: string;
   events: VersionEventBinding[];

@@ -109,6 +109,7 @@ export const versionConfigSchema = z.strictObject({
   shortName: z.string().min(1),
   status: z.enum(['live', 'upcoming', 'retired']),
   launchDate: z.iso.datetime({ offset: true }).or(z.iso.date()).optional(),
+  summary: z.string().min(1).optional(),
   regions: z.array(regionSchema).min(1),
   defaultRegionId: slug,
   events: z.array(versionEventBindingSchema),

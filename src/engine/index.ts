@@ -5,4 +5,5 @@ export * from './agenda';
 export * from './calendar';
 export * from './ics';
 export * from './feeds';
+export * from './version';
 export { ruleExpanders, expandRule } from './rules';

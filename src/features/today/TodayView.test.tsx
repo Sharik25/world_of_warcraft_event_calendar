@@ -163,7 +163,7 @@ describe('Today view', () => {
     act(() => {
       vi.advanceTimersByTime(60 * 60_000);
     });
-    expect(screen.getByText('Ends in 4d 21h')).toBeInTheDocument();
+    await vi.waitFor(() => expect(screen.getByText('Ends in 4d 21h')).toBeInTheDocument());
   });
 });
 

@@ -1,0 +1,51 @@
+import { expect, test } from './fixtures';
+
+const overflowX = () => document.documentElement.scrollWidth - document.documentElement.clientWidth;
+
+test('version picker switches to Forever keeping view and date, and back', async ({ page }) => {
+  await page.goto('/anniversary/month/2026-11');
+  await expect(page.getByRole('heading', { level: 1, name: 'November 2026' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Version' }).click();
+  const picker = page.getByRole('dialog', { name: 'Choose version' });
+  await expect(picker).toBeVisible();
+  await picker.getByRole('button', { name: /WoW: Forever/ }).click();
+
+  await expect(page).toHaveURL(/\/forever\/month\/2026-11$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'WoW: Forever' })).toBeVisible();
+  await expect(page.getByText('Launches in 8d 12h')).toBeVisible();
+  expect(await page.evaluate(overflowX)).toBeLessThanOrEqual(0);
+
+  await page.getByRole('link', { name: 'Back to Anniversary' }).click();
+  await expect(page).toHaveURL(/\/anniversary\/month\/2026-11$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'November 2026' })).toBeVisible();
+});
+
+test('the start page opens the last used version', async ({ page }) => {
+  await page.goto('/forever/today');
+  await expect(page.getByRole('heading', { level: 1, name: 'WoW: Forever' })).toBeVisible();
+  await page.goto('/');
+  await expect(page).toHaveURL(/\/forever\/today$/);
+});
+
+test('V opens the picker and Escape closes it', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'hardware keyboard shortcuts are a desktop feature');
+  await page.goto('/anniversary/today');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.keyboard.press('v');
+  const picker = page.getByRole('dialog', { name: 'Choose version' });
+  await expect(picker).toBeVisible();
+  await expect(picker.getByRole('button', { name: /Anniversary/ })).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(picker).toBeHidden();
+});
+
+test('picker fits a 360px screen', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto('/anniversary/today');
+  await page.getByRole('button', { name: 'Version' }).click();
+  const box = (await page.getByRole('dialog', { name: 'Choose version' }).boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(360);
+  expect(await page.evaluate(overflowX)).toBeLessThanOrEqual(0);
+});
