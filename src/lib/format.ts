@@ -35,6 +35,32 @@ export function formatDay(date: LocalDate): string {
   );
 }
 
+/** "Sunday, November 15" */
+export function formatDayLong(date: LocalDate): string {
+  return fmt('UTC', { weekday: 'long', month: 'long', day: 'numeric' }).format(utcDate(date));
+}
+
+/** "Mon" */
+export function weekdayShort(date: LocalDate): string {
+  return fmt('UTC', { weekday: 'short' }).format(utcDate(date));
+}
+
+/** "October 2026" for "2026-10" */
+export function formatMonth(month: string): string {
+  return fmt('UTC', { month: 'long', year: 'numeric' }).format(utcDate(`${month}-01`));
+}
+
+/** "Oct 26 – Nov 1, 2026" */
+export function formatDateSpan(from: LocalDate, to: LocalDate): string {
+  return fmt('UTC', { month: 'short', day: 'numeric', year: 'numeric' })
+    .formatRange(utcDate(from), utcDate(to))
+    .replace(/\s*[–-]\s*/, ' – ');
+}
+
+function utcDate(date: LocalDate): Date {
+  return new Date(`${date}T00:00:00Z`);
+}
+
 /** "Sun, Oct 18, 10:00". Date and time are formatted separately: engines join them differently. */
 export function formatDateTime(instant: Date, timeZone: string): string {
   const date = fmt(timeZone, { weekday: 'short', month: 'short', day: 'numeric' }).format(instant);

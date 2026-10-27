@@ -1,5 +1,9 @@
 import {
   dayParts,
+  formatDateSpan,
+  formatDayLong,
+  formatMonth,
+  weekdayShort,
   formatDateTime,
   formatDay,
   formatDistance,
@@ -18,6 +22,14 @@ describe('format', () => {
       year: 2026,
     });
     expect(formatDay('2026-11-01')).toBe('Sun, Nov 1');
+  });
+
+  it('formats calendar labels', () => {
+    expect(formatDayLong('2026-11-15')).toBe('Sunday, November 15');
+    expect(weekdayShort('2026-10-26')).toBe('Mon');
+    expect(formatMonth('2026-10')).toBe('October 2026');
+    expect(formatDateSpan('2026-10-26', '2026-11-01')).toBe('Oct 26 – Nov 1, 2026');
+    expect(formatDateSpan('2026-12-28', '2027-01-03')).toBe('Dec 28, 2026 – Jan 3, 2027');
   });
 
   it('formats instants in a zone with 24-hour times', () => {

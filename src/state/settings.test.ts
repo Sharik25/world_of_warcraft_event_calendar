@@ -86,7 +86,27 @@ describe('migrateSettings', () => {
 
 describe('localeWeekStart', () => {
   it('reads the week start from the locale, defaulting to Monday', () => {
-    expect([0, 1]).toContain(localeWeekStart('en-US'));
+    expect(localeWeekStart('en-US')).toBe(0);
+    expect(localeWeekStart('en-GB')).toBe(1);
     expect(localeWeekStart('not a locale!')).toBe(1);
+  });
+
+  it('supports the Safari `weekInfo` property when getWeekInfo() is missing', () => {
+    const proto = Intl.Locale.prototype as unknown as Record<string, unknown>;
+    const original = Object.getOwnPropertyDescriptor(proto, 'getWeekInfo');
+    delete proto.getWeekInfo;
+    Object.defineProperty(proto, 'weekInfo', {
+      configurable: true,
+      get(this: Intl.Locale) {
+        return { firstDay: this.region === 'US' ? 7 : 1 };
+      },
+    });
+    try {
+      expect(localeWeekStart('en-US')).toBe(0);
+      expect(localeWeekStart('de-DE')).toBe(1);
+    } finally {
+      delete proto.weekInfo;
+      if (original) Object.defineProperty(proto, 'getWeekInfo', original);
+    }
   });
 });

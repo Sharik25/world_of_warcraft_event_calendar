@@ -322,26 +322,26 @@ Non-dominant active events are still listed (secondary cards / small markers). U
 
 ### 8.2 Layout
 
-**Today view (default route)**
+**Today view (default route)**: a single centered column on every viewport (rev. 1).
 ```
 ┌───────────────────────────────┐
 │  [version chip]   [⚙]         │  top bar (slim)
 │                               │
-│        ╔═══════════╗          │
-│        ║    27     ║          │  themed date numeral (dominant event style)
+│     ‹  ╔═══════════╗  ›       │
+│        ║    27     ║          │  themed date numeral, centered on the page
 │        ║ OCTOBER   ║          │
 │        ╚═══════════╝          │
 │      HALLOW'S END             │  dominant event title
 │   Ends in 4d 21h  · ⓘ         │  live countdown, unverified marker if needed
-│   ▸ highlight 1               │
-│   ▸ highlight 2               │
-│   [ Add to calendar ▾ ]       │
-│ ───────────────────────────── │
-│  Also today:   [Fishing card] │  secondary active events
-│  Coming soon:  [Winter Veil in 49d] [DMF in 6d]   (next 30 days)
-│                               │
 │ ┌───────────────────────────┐ │
-│ │ [Day][Week][Month] [Ver][⋯]│ │  ActionBar (fixed bottom)
+│ │ summary, ▸ highlights     │ │  details card
+│ │ [Details] [Add to cal ▾]  │ │
+│ └───────────────────────────┘ │
+│  Also on this day: [Fishing]  │  secondary active events
+│  Coming soon: [Winter Veil in 49d] [DMF in 6d]   (next 30 days)
+│                               │  ← "Coming soon" sits between details and the action bar
+│ ┌───────────────────────────┐ │
+│ │ [Day][Week][Month] [Ver]  │ │  ActionBar (fixed bottom, no ⋯ slot)
 │ └───────────────────────────┘ │
 └───────────────────────────────┘
 ```
@@ -360,7 +360,7 @@ Non-dominant active events are still listed (secondary cards / small markers). U
 
 ### 8.3 Action bar (classic action-bar feel)
 - Fixed bottom; carved frame; square slot buttons with icon + label; active slot has gold glow.
-- Slots: **Day · Week · Month** | **Version** (opens version picker popover) | **⋯** (Add-to-calendar / Subscribe, Settings, About).
+- Slots: **Day · Week · Month** | **Version** (opens version picker popover). No "⋯ More" slot (rev. 1): Settings & About live behind the top-bar ⚙ button; Add-to-calendar lives in the event sheet / hero card; Subscribe lives in Settings.
 - Desktop: centered, max-width 640px, shows keybind hints in slot corners like the game: `1` Day, `2` Week, `3` Month, `V` Version, `T` Today, `←/→` prev/next.
 - Mobile: full width, `padding-bottom: env(safe-area-inset-bottom)`, slot tap targets ≥ 48×48px, labels always visible.
 - Navigation in Week/Month: arrows in the header + swipe left/right on mobile + "Today" button.
@@ -450,13 +450,23 @@ Rules:
 - Routes: `/` → `/:version/today`; `/:version/day/:date`. Hero with themed numeral, countdown (`useNow`), highlights, secondary events, "coming soon" (30 days), event sheet via `?event=`.
 - ✅ Playwright: Today shows correct dominant event for a mocked date (inject clock); sheet opens/closes on both viewports.
 
-### Phase 4 — Week & Month views
+### Phase 4 — Week & Month views (+ rev. 1 layout fixes)
+- Rev. 1: Today view becomes one centered column on desktop too (date numeral centered on the page); order: numeral → title → countdown → details card → also on this day → coming soon → action bar. Remove the "More" action-bar slot.
 - `/:version/week/:date`, `/:version/month/:yyyy-mm`; ribbons (desktop), list/dots (mobile); swipe + keyboard nav; Today button.
 - ✅ Month for Oct 2026 renders tinted cells correctly; no horizontal scroll at 360px; keyboard shortcuts work.
 
-### Phase 5 — Event themes
-- Implement themes in order: Hallow's End (live now), Winter Veil, Darkmoon Faire, Fishing, then the rest. Shared particles component.
-- ✅ Contrast test on each theme's tokens; reduced-motion disables particles; per-theme asset budget respected.
+### Phase 5 — Event themes & decorations (rev. 1)
+- Implement themes in order: Hallow's End (live now), Winter Veil + New Year, Darkmoon Faire, Fishing, then the rest. Shared particles component.
+- Rev. 1: each event gets a full visual identity, not just a palette: its own colors, frame/card styling and **original SVG decorations** placed around the page (corners, edges, hero), in a classic-WoW-inspired hand-painted style. Never ripped game art (§11).
+  - Hallow's End: carved jack-o'-lanterns, hanging spiders on threads, bats, a skeleton peeking from a corner, harvest moon, candle glow.
+  - Feast of Winter Veil: decorated pine trees, wrapped gifts, candy canes, snow-capped frame edges, gentle snowfall.
+  - New Year / Fireworks Spectacular: firework bursts, sparkles, night sky, festive banners.
+  - Darkmoon Faire: striped carnival tent, bunting flags, tickets and cards, purple/teal palette.
+  - Fishing Extravaganza: fishing pole and bobber, jumping fish, water ripples, rope-and-wood frame.
+  - Lunar Festival: paper lanterns, elder coins, crescent moon. Love is in the Air: hearts, ribbons, petals. Noblegarden: painted eggs, bunnies, flowers. Children's Week: kites, toys, paper texture. Midsummer: bonfire, flame garlands, sun. Brewfest: kegs, mugs with foam, rams. Harvest Festival: wheat sheaves, pumpkins, autumn leaves.
+  - Decorations are part of the theme definition (data), rendered by one shared `<ThemeDecorations>` component; adding a theme still needs no UI code.
+  - Mobile: fewer/smaller decorations, never covering content or tap targets; `aria-hidden`, `pointer-events: none`.
+- ✅ Contrast test on each theme's tokens; reduced-motion disables particles and animated decorations; per-theme asset budget respected; decorations never cause horizontal scroll at 360px.
 
 ### Phase 6 — Calendar export
 - Google link builder, client `.ics` (single + series), build-time feeds, Subscribe dialog with copyable URLs and platform instructions (Apple / Google / Outlook).
@@ -546,6 +556,16 @@ Persist with versioned key `almanac-settings-v1` and a migration function.
 - A visual snapshot per view × {mobile, desktop} × {base, hallows-end} via Playwright `toHaveScreenshot` (fixed clock).
 
 ---
+
+## 16b. Revision log
+
+**Rev. 1 (2026-10-27, after reviewing Phase 3):**
+1. Day view: date numeral centered on the page (single centered column on desktop too).
+2. "Coming soon" moves below the details card, just above the action bar.
+3. Remove the "More" (⋯) action-bar slot.
+4. Rich per-event decorations and styling (pumpkins/spiders for Hallow's End, trees/candy for Winter Veil & New Year, Darkmoon Faire, Fishing, etc.), original art in classic-WoW style.
+
+Items 1–3 → Phase 4. Item 4 → Phase 5.
 
 ## 17. Open decisions (defaults chosen — change if needed)
 

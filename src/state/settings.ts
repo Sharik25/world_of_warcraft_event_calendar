@@ -30,12 +30,16 @@ export function userTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
+type LocaleWithWeekInfo = Intl.Locale & {
+  getWeekInfo?: () => { firstDay: number }; // Chrome, Firefox, Node
+  weekInfo?: { firstDay: number }; // Safari (older spec draft: accessor property)
+};
+
 /** Week start from the browser locale (Intl week info); Monday when unknown. */
 export function localeWeekStart(locale = navigator.language): 0 | 1 {
   try {
-    const info = (
-      new Intl.Locale(locale) as Intl.Locale & { getWeekInfo?: () => { firstDay: number } }
-    ).getWeekInfo?.();
+    const loc = new Intl.Locale(locale) as LocaleWithWeekInfo;
+    const info = loc.getWeekInfo?.() ?? loc.weekInfo;
     return info?.firstDay === 7 ? 0 : 1;
   } catch {
     return 1;

@@ -10,9 +10,18 @@ import { strings } from '@/strings/en';
 import { Badge, Icon, Sheet, ThemeScope } from '@/ui';
 import styles from './EventSheet.module.css';
 
-/** Event details for `?event=<id>`, styled with that event's theme. */
-export function EventSheet({ eventId, onClose }: { eventId: string | null; onClose: () => void }) {
-  const { version, catalog, region, userTimeZone, viewDate, now } = useVersionView();
+/** Event details for `?event=<id>`, styled with that event's theme. `date` picks the occurrence. */
+export function EventSheet({
+  eventId,
+  date,
+  onClose,
+}: {
+  eventId: string | null;
+  date?: string;
+  onClose: () => void;
+}) {
+  const { version, catalog, region, userTimeZone, viewDate: currentDate, now } = useVersionView();
+  const viewDate = date ?? currentDate;
   const def = eventId ? catalog[eventId] : undefined;
 
   const occurrence = useMemo(() => {

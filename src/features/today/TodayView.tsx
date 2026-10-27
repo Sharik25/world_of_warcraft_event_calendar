@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { paths, withEvent } from '@/app/paths';
 import { useVersionView } from '@/app/versionView';
 import type { VersionView } from '@/app/versionView';
@@ -8,7 +8,7 @@ import { buildDayAgenda } from '@/engine/agenda';
 import { addDays, dayRange } from '@/engine/time';
 import { Countdown } from '@/features/common/Countdown';
 import { UnconfirmedMarker } from '@/features/common/UnconfirmedMarker';
-import { EventSheet } from '@/features/event-sheet/EventSheet';
+import { RoutedEventSheet } from '@/features/event-sheet/RoutedEventSheet';
 import { useOccurrences } from '@/hooks/useOccurrences';
 import { formatDistance, formatRange } from '@/lib/format';
 import { strings } from '@/strings/en';
@@ -24,7 +24,6 @@ export function TodayView() {
   const { version, catalog, region, userTimeZone, displayTimeZone, now, today, viewDate, isToday } =
     view;
   const location = useLocation();
-  const navigate = useNavigate();
 
   const occurrences = useOccurrences(
     version,
@@ -43,7 +42,6 @@ export function TodayView() {
   const dayHref = (date: string) =>
     date === today ? paths.today(version.id) : paths.day(version.id, date);
   const eventHref = (eventId: string) => ({ search: withEvent(location.search, eventId) });
-  const eventParam = new URLSearchParams(location.search).get('event');
   const { dominant } = agenda;
   const dominantDef = dominant ? catalog[dominant.eventId] : undefined;
   const also = agenda.active.slice(1);
@@ -171,10 +169,7 @@ export function TodayView() {
         </section>
       </div>
 
-      <EventSheet
-        eventId={eventParam}
-        onClose={() => navigate({ search: withEvent(location.search, null) }, { replace: true })}
-      />
+      <RoutedEventSheet />
     </div>
   );
 }
