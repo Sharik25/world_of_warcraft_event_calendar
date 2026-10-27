@@ -4,6 +4,10 @@ export const strings = {
     name: "Innkeeper's Almanac",
     tagline: 'What is happening in Azeroth today — pull up a chair by the hearth.',
   },
+  settings: {
+    region: 'Server region',
+    serverTime: (region: string) => `${region} server time`,
+  },
   legal: {
     disclaimer:
       'Fan-made. Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft is a trademark of Blizzard Entertainment, Inc.',

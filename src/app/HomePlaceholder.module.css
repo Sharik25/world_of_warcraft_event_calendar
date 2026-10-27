@@ -21,3 +21,11 @@
   margin: var(--space-3) 0 0;
   color: var(--color-ink-muted);
 }
+
+.region {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid rgb(92 67 48 / 0.3);
+}
