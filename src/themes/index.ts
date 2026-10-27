@@ -2,30 +2,37 @@ import type { ThemeId } from '@/domain/types';
 import { theme as baseTheme } from './base/theme';
 import type { ThemeDefinition } from './types';
 
-export type { ParticleKind, ThemeDefinition, ThemeToken } from './types';
+export type {
+  Decoration,
+  DecorationAnchor,
+  DecorationMotion,
+  NumeralOrnament,
+  ParticleKind,
+  ThemeDefinition,
+  ThemeToken,
+} from './types';
 export { baseTheme };
 
 type ThemeLoader = () => Promise<{ theme: ThemeDefinition }>;
 
 /**
- * Theme registry. The base theme is bundled; event themes are lazy-loaded.
- * `null` = id reserved by event data but not designed yet (renders with the base theme).
- * Add a theme: create `./<id>/theme.ts`, then point its entry at `() => import('./<id>/theme')`.
+ * Theme registry. The base theme is bundled; event themes (art included) are lazy-loaded.
+ * Add a theme: create `./<id>/theme.ts`, then add one line here.
  */
-const themeLoaders: Record<ThemeId, ThemeLoader | null> = {
+const themeLoaders: Record<ThemeId, ThemeLoader> = {
   base: async () => ({ theme: baseTheme }),
   'hallows-end': () => import('./hallows-end/theme'),
-  'lunar-festival': null,
-  'love-is-in-the-air': null,
-  noblegarden: null,
-  'childrens-week': null,
-  midsummer: null,
-  fireworks: null,
-  'harvest-festival': null,
-  brewfest: null,
-  'winter-veil': null,
-  'darkmoon-faire': null,
-  fishing: null,
+  'winter-veil': () => import('./winter-veil/theme'),
+  fireworks: () => import('./fireworks/theme'),
+  'darkmoon-faire': () => import('./darkmoon-faire/theme'),
+  fishing: () => import('./fishing/theme'),
+  'lunar-festival': () => import('./lunar-festival/theme'),
+  'love-is-in-the-air': () => import('./love-is-in-the-air/theme'),
+  noblegarden: () => import('./noblegarden/theme'),
+  'childrens-week': () => import('./childrens-week/theme'),
+  midsummer: () => import('./midsummer/theme'),
+  brewfest: () => import('./brewfest/theme'),
+  'harvest-festival': () => import('./harvest-festival/theme'),
 };
 
 export const themeIds: readonly ThemeId[] = Object.keys(themeLoaders);
@@ -37,7 +44,7 @@ export function getCachedTheme(id: ThemeId): ThemeDefinition | undefined {
   return cache.get(id);
 }
 
-/** Loads a theme, falling back to the base theme for unknown or not-yet-designed ids. */
+/** Loads a theme, falling back to the base theme for unknown ids. */
 export async function loadTheme(id: ThemeId): Promise<ThemeDefinition> {
   const cached = cache.get(id);
   if (cached) return cached;

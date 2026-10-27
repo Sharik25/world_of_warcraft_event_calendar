@@ -34,3 +34,33 @@
   font-weight: 400;
   opacity: 0.8;
 }
+
+/* Theme ornament on the frame: a cap across the top edge, or a piece perched on the corner. */
+.ornament {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.5));
+}
+
+.ornament > :global(svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ornament[data-placement='corner'] {
+  top: calc(var(--ornament-size) * -0.45);
+  right: calc(var(--ornament-size) * -0.4);
+  width: var(--ornament-size);
+  height: var(--ornament-size);
+  transform: rotate(12deg);
+}
+
+.ornament[data-placement='cap'] {
+  top: calc(var(--ornament-size) * -0.35);
+  left: -4px;
+  right: -4px;
+  height: var(--ornament-size);
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}

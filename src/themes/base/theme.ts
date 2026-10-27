@@ -16,6 +16,7 @@ export const theme: ThemeDefinition = {
     '--color-frame': '#3a2516',
     '--glow': '0 0 12px rgb(232 130 58 / 0.45)',
     '--cell-tint': 'transparent',
+    '--particle-color': '#e8823a',
   },
   background: {
     css: [

@@ -48,3 +48,12 @@ Node 22 is required (`nvm use`; see `.nvmrc`). The system default Node 18 is too
 - Anniversary assumptions to re-check in-game: US event clock = Pacific time; holiday start/end time = 10:00 server; Darkmoon Faire opens 00:00 Monday after the first Friday, location rotation unknown.
 - Swipe navigation uses a small touch-event hook (`src/hooks/useSwipeNav.ts`) instead of `@use-gesture/react` from PLAN.md. The library's click handling blocked link taps inside the swipe area.
 - Mobile vs desktop markup differs in Week/Month (`useMediaQuery(DESKTOP_QUERY)`). Unit tests render the mobile layout unless `window.__desktop = true`.
+
+## Themes & art (Phase 5)
+
+- A theme is data: `src/themes/<id>/theme.ts` (tokens, background, particles, `numeral.ornament`, `decorations`) + one line in `src/themes/index.ts`. `ThemeDecorations` / `AmbientParticles` render it; no UI code per theme.
+- Keep decorations minimal (PLAN.md rev. 2): garlands/edge strips, background, particles and small animated accents only, never large corner objects. A theme's `emblem` is small art for card medallions.
+- Art lives in `src/themes/art/*.ts` as original SVG strings (chunky outlines, painted gradients). Never copy or trace game art.
+- Several copies of the same art can be on a page: always render through `uniqueSvgIds()`, or gradients break when the first copy is hidden.
+- Mobile: bottom-corner art moves from the fixed layer into the end-of-page scene so it never sits behind text.
+- `src/themes/__tests__/contrast.test.ts` enforces WCAG AA per theme and the 150 KB budget. Fix a failing theme by adjusting its tokens, not the test.

@@ -567,6 +567,10 @@ Persist with versioned key `almanac-settings-v1` and a migration function.
 
 Items 1–3 → Phase 4. Item 4 → Phase 5.
 
+**Rev. 2 (2026-10-27, after reviewing Phase 5):**
+1. "Also on this day" cards are styled in their own event's theme (accent stripe and tint, emblem medallion, countdown pill, chevron).
+2. Minimalist decorations: keep garlands/edge strips, backgrounds, particles (stars, snow, embers…) and small animated accents; remove large corner objects (moons, tents, tickets, pumpkins, trees, bonfires, kegs…). Each theme gets a small `emblem` for medallions.
+
 ## 17. Open decisions (defaults chosen — change if needed)
 
 | Decision | Default |

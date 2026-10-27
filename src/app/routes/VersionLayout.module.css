@@ -12,6 +12,14 @@
   }
 }
 
+.topBar,
+.main,
+.footer {
+  /* Above the theme's decoration and particle layers. */
+  position: relative;
+  z-index: 1;
+}
+
 .topBar {
   display: flex;
   align-items: center;

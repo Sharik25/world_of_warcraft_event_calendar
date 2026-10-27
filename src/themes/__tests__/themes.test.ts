@@ -5,10 +5,9 @@ import { ThemeScope } from '@/ui';
 import { baseTheme, getCachedTheme, loadTheme, themeIds } from '..';
 
 describe('theme registry', () => {
-  it('loads every registered theme (not-yet-designed ids fall back to base)', async () => {
+  it('loads every registered theme, falling back to base for unknown ids', async () => {
     for (const id of themeIds) {
-      const theme = await loadTheme(id);
-      expect(theme.id === id || theme === baseTheme, id).toBe(true);
+      expect((await loadTheme(id)).id, id).toBe(id);
     }
     expect((await loadTheme('hallows-end')).id).toBe('hallows-end');
     expect(await loadTheme('does-not-exist')).toBe(baseTheme);

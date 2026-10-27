@@ -1,3 +1,5 @@
+import { bat, cobweb, hangingSpider } from '../art/halloween';
+import { pumpkin } from '../art/shared';
 import type { ThemeDefinition } from '../types';
 
 /** Hallow's End: dusk purple and pumpkin amber under a harvest moon. */
@@ -16,14 +18,31 @@ export const theme: ThemeDefinition = {
     '--color-frame': '#2d1a3b',
     '--glow': '0 0 14px rgb(255 138 31 / 0.55)',
     '--cell-tint': 'rgb(255 138 31 / 0.16)',
+    '--particle-color': '#ff9a3c',
   },
   background: {
     css: [
-      // Harvest moon
-      'radial-gradient(circle at 82% 12%, rgb(255 214 150 / 0.9) 0 28px, rgb(255 170 80 / 0.25) 30px, transparent 90px)',
       'radial-gradient(ellipse at 50% 110%, rgb(255 120 20 / 0.28), transparent 60%)',
+      'radial-gradient(ellipse at 85% 10%, rgb(255 214 150 / 0.12), transparent 40%)',
       'linear-gradient(180deg, #241038 0%, #170d22 55%, #0f0816 100%)',
     ].join(', '),
   },
   particles: 'embers',
+  numeral: { ornament: { svg: pumpkin(true, false), placement: 'corner', size: 52 } },
+  emblem: pumpkin(true, false),
+  decorations: [
+    { svg: cobweb, anchor: 'top-left', size: 150, mobileSize: 80 },
+    { svg: hangingSpider, anchor: 'top-right', size: 46, x: 220, mobileSize: 30, motion: 'bob' },
+    { svg: bat, anchor: 'top-left', size: 76, x: 230, y: 150, motion: 'float', mobileSize: null },
+    {
+      svg: bat,
+      anchor: 'top-right',
+      size: 56,
+      x: 120,
+      y: 220,
+      motion: 'float',
+      flip: true,
+      mobileSize: null,
+    },
+  ],
 };

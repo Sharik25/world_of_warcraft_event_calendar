@@ -1,0 +1,127 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  left: var(--px);
+  width: var(--size);
+  height: var(--size);
+  background: var(--particle-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  will-change: transform, opacity;
+}
+
+.layer[data-paused] .particle {
+  animation-play-state: paused;
+}
+
+/* Half as many on small screens. */
+@media (max-width: 767px) {
+  .particle:nth-child(n + 19) {
+    display: none;
+  }
+}
+
+/* Embers rise from the bottom and fade. */
+.layer[data-kind='embers'] .particle {
+  top: 100%;
+  width: calc(var(--size) * 0.6);
+  height: calc(var(--size) * 0.6);
+  box-shadow: 0 0 8px 2px var(--particle-color);
+  animation-name: rise;
+}
+
+/* Snow falls with a gentle drift. */
+.layer[data-kind='snow'] .particle {
+  top: -12px;
+  opacity: 0.85;
+  animation-name: fall;
+}
+
+/* Petals / leaves tumble down. */
+.layer[data-kind='petals'] .particle {
+  top: -16px;
+  width: calc(var(--size) * 1.8);
+  height: var(--size);
+  border-radius: 80% 0 80% 0;
+  animation-name: tumble;
+}
+
+/* Sparkles twinkle in place. */
+.layer[data-kind='sparkles'] .particle {
+  top: var(--py);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  width: calc(var(--size) * 2);
+  height: calc(var(--size) * 2);
+  border-radius: 0;
+  animation-name: twinkle;
+  animation-duration: calc(var(--duration) / 3);
+  animation-timing-function: ease-in-out;
+}
+
+/* Bubbles rise and wobble. */
+.layer[data-kind='bubbles'] .particle {
+  top: 100%;
+  background: transparent;
+  border: 1.5px solid var(--particle-color);
+  animation-name: rise;
+}
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(var(--drift), -105vh);
+    opacity: 0;
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--drift), 105vh);
+  }
+}
+
+@keyframes tumble {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(var(--drift), 105vh) rotate(var(--spin));
+    opacity: 0.6;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}

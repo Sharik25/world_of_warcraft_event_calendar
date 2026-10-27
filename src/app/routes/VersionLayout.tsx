@@ -8,10 +8,20 @@ import { dominantThemeId } from '@/hooks/useDominantTheme';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useNow } from '@/hooks/useNow';
 import { useOccurrences } from '@/hooks/useOccurrences';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useSwipeNav } from '@/hooks/useSwipeNav';
+import { useTheme } from '@/hooks/useTheme';
 import { useRegionId, userTimeZone, useSettings } from '@/state/settings';
 import { strings } from '@/strings/en';
-import { ActionBar, ActionBarDivider, ActionButton, Icon, ThemeScope } from '@/ui';
+import {
+  ActionBar,
+  ActionBarDivider,
+  ActionButton,
+  AmbientParticles,
+  Icon,
+  ThemeDecorations,
+  ThemeScope,
+} from '@/ui';
 import { paths, type ViewMode } from '../paths';
 import type { VersionView } from '../versionView';
 import type { VersionLoaderData } from './loaders';
@@ -62,6 +72,8 @@ export function VersionLayout() {
     hiddenCategories,
   );
   const themeId = dominantThemeId(dayOccurrences, viewDate, userTz, catalog, version);
+  const theme = useTheme(themeId);
+  const reducedMotion = useReducedMotion();
 
   const view: VersionView = useMemo(() => {
     const hrefFor = (target: ViewMode, date: LocalDate) => {
@@ -132,6 +144,9 @@ export function VersionLayout() {
 
   return (
     <ThemeScope themeId={themeId} withBackground className={styles.shell}>
+      <ThemeDecorations decorations={theme.decorations} reducedMotion={reducedMotion} />
+      {theme.particles && !reducedMotion && <AmbientParticles kind={theme.particles} />}
+
       <header className={styles.topBar}>
         <button type="button" className={styles.versionChip} onClick={() => setMoreOpen(true)}>
           {strings.topBar.versionChip(version.shortName, region.label)}
@@ -151,6 +166,11 @@ export function VersionLayout() {
       </main>
 
       <footer className={styles.footer}>
+        <ThemeDecorations
+          decorations={theme.decorations}
+          variant="scene"
+          reducedMotion={reducedMotion}
+        />
         <small>{strings.legal.disclaimer}</small>
       </footer>
 

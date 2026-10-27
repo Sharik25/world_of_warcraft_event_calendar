@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router';
 import { paths, withEvent } from '@/app/paths';
 import { useVersionView } from '@/app/versionView';
-import type { VersionView } from '@/app/versionView';
-import type { Occurrence } from '@/domain/types';
 import { buildDayAgenda } from '@/engine/agenda';
 import { addDays, dayRange } from '@/engine/time';
 import { Countdown } from '@/features/common/Countdown';
@@ -14,6 +12,7 @@ import { formatDistance, formatRange } from '@/lib/format';
 import { strings } from '@/strings/en';
 import { Icon, ParchmentCard } from '@/ui';
 import { DateNumeral } from './DateNumeral';
+import { EventCard } from './EventCard';
 import styles from './TodayView.module.css';
 
 const COMING_SOON_DAYS = 30;
@@ -171,41 +170,5 @@ export function TodayView() {
 
       <RoutedEventSheet />
     </div>
-  );
-}
-
-function EventCard({
-  occurrence,
-  href,
-  view: { catalog, now, displayTimeZone, isToday },
-}: {
-  occurrence: Occurrence;
-  href: { search: string };
-  view: VersionView;
-}) {
-  const def = catalog[occurrence.eventId];
-  if (!def) return null;
-  return (
-    <ParchmentCard as="article" compact className={styles.card}>
-      <h3 className={styles.cardTitle}>
-        <Link to={href} className={styles.cardLink}>
-          {def.name}
-        </Link>
-      </h3>
-      <p className={styles.cardMeta}>
-        {isToday && (
-          <>
-            <Countdown occurrence={occurrence} now={now} timeZone={displayTimeZone} />
-            {' · '}
-          </>
-        )}
-        <time dateTime={occurrence.start.toISOString()}>
-          {formatRange(occurrence.start, occurrence.end, displayTimeZone)}
-        </time>
-      </p>
-      {!occurrence.verified && (
-        <span className={styles.cardBadge}>{strings.common.unconfirmed}</span>
-      )}
-    </ParchmentCard>
   );
 }

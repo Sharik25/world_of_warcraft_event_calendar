@@ -12,9 +12,43 @@ export type ThemeToken =
   | '--color-frame'
   | '--glow'
   | '--cell-tint'
+  | '--particle-color'
   | '--font-display';
 
 export type ParticleKind = 'embers' | 'snow' | 'petals' | 'sparkles' | 'bubbles';
+
+/** Where a decoration sits: a viewport corner, or a full-width repeating strip along an edge. */
+export type DecorationAnchor =
+  'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top' | 'bottom';
+
+export type DecorationMotion = 'sway' | 'bob' | 'float' | 'flicker' | 'pulse' | 'spin';
+
+/** One piece of original SVG art placed around the page. Pure data: no UI code per theme. */
+export interface Decoration {
+  /** Inline SVG markup (original art only, see PLAN.md §11). */
+  svg: string;
+  anchor: DecorationAnchor;
+  /** Desktop width in px (for edge strips: the strip height). */
+  size: number;
+  /** Mobile width/height in px; `null` hides it on mobile. Default: 55% of `size`. */
+  mobileSize?: number | null;
+  /** Offset in px from the anchored edges (desktop; scaled on mobile). */
+  x?: number;
+  y?: number;
+  rotate?: number;
+  flip?: boolean;
+  motion?: DecorationMotion;
+  /** Soft colored glow (CSS color), e.g. candle light in a jack-o'-lantern. */
+  glow?: string;
+  opacity?: number;
+}
+
+export interface NumeralOrnament {
+  svg: string;
+  /** `cap`: spans the top edge of the date frame (e.g. snow). `corner`: sits on its top-right corner. */
+  placement: 'cap' | 'corner';
+  size: number;
+}
 
 export interface ThemeDefinition {
   id: ThemeId;
@@ -22,5 +56,9 @@ export interface ThemeDefinition {
   tokens: Partial<Record<ThemeToken, string>>; // CSS custom properties
   background?: { css: string }; // gradients / SVG patterns
   particles?: ParticleKind | null;
-  numeral?: { ornamentSvg?: string }; // ornament around the date numeral
+  numeral?: { ornament?: NumeralOrnament };
+  /** Small square art that identifies the event (card medallions, markers). */
+  emblem?: string;
+  /** Kept minimal: edge garlands/strips and small animated accents, no large corner objects. */
+  decorations?: Decoration[];
 }

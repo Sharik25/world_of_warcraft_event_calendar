@@ -1,11 +1,13 @@
 export { ActionBar, ActionBarDivider } from './ActionBar/ActionBar';
 export { ActionButton } from './ActionButton/ActionButton';
+export { AmbientParticles } from './AmbientParticles/AmbientParticles';
 export { Badge } from './Badge/Badge';
 export { Frame } from './Frame/Frame';
 export { Icon } from './Icon/Icon';
 export { iconNames, type IconName } from './Icon/icons';
 export { ParchmentCard } from './ParchmentCard/ParchmentCard';
 export { Sheet } from './Sheet/Sheet';
+export { ThemeDecorations } from './ThemeDecorations/ThemeDecorations';
 export { ThemeScope } from './ThemeScope/ThemeScope';
 export { useScopeThemeId } from './ThemeScope/themeContext';
 export { Tooltip } from './Tooltip/Tooltip';

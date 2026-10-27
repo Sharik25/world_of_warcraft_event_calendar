@@ -1,0 +1,220 @@
+.layer {
+  --deco-bottom: 0px;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Mobile: bottom decorations move into the end-of-page scene instead. */
+@media (max-width: 767px) {
+  .layer [data-anchor^='bottom'] {
+    display: none !important;
+  }
+}
+
+/* End-of-page scene (mobile only): the bottom art standing on the ground strip. */
+.scene {
+  --deco-bottom: 0px;
+  position: relative;
+  margin: var(--space-4) calc(var(--space-4) * -1) var(--space-3);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .scene {
+    display: none;
+  }
+}
+
+.item {
+  position: absolute;
+  width: var(--size-m);
+  transform: rotate(var(--rotate)) scaleX(var(--flip));
+}
+
+.item[data-anchor='top-left'] {
+  top: var(--y-m);
+  left: var(--x-m);
+  transform-origin: top left;
+}
+
+.item[data-anchor='top-right'] {
+  top: var(--y-m);
+  right: var(--x-m);
+  transform-origin: top right;
+}
+
+.item[data-anchor='bottom-left'] {
+  bottom: calc(var(--deco-bottom) + var(--y-m));
+  left: var(--x-m);
+  transform-origin: bottom left;
+}
+
+.item[data-anchor='bottom-right'] {
+  bottom: calc(var(--deco-bottom) + var(--y-m));
+  right: var(--x-m);
+  transform-origin: bottom right;
+}
+
+.item[data-glow] {
+  filter: drop-shadow(0 0 14px var(--glow-color)) drop-shadow(0 4px 6px rgb(0 0 0 / 0.45));
+}
+
+.item:not([data-glow]) {
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.45));
+}
+
+.art,
+.art > :global(svg) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Full-width repeating strips (bunting, snow, ripples, grass) */
+.strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--size-m);
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+.strip[data-anchor='top'] {
+  top: 0;
+}
+
+.strip[data-anchor='bottom'] {
+  bottom: var(--deco-bottom);
+}
+
+.item[data-mobile-hidden],
+.strip[data-mobile-hidden] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .item {
+    width: var(--size);
+  }
+
+  .item[data-anchor^='top'] {
+    top: var(--y);
+  }
+
+  .item[data-anchor$='left'] {
+    left: var(--x);
+  }
+
+  .item[data-anchor$='right'] {
+    right: var(--x);
+  }
+
+  .item[data-anchor^='bottom'] {
+    bottom: calc(var(--deco-bottom) + var(--y));
+  }
+
+  .strip {
+    height: var(--size);
+  }
+
+  .item[data-mobile-hidden] {
+    display: block;
+  }
+
+  .strip[data-mobile-hidden] {
+    display: block;
+  }
+}
+
+/* Gentle ambient motion */
+.art[data-motion='sway'] {
+  transform-origin: top center;
+  animation: sway 5s ease-in-out infinite alternate;
+}
+
+.art[data-motion='bob'] {
+  animation: bob 3.5s ease-in-out infinite alternate;
+}
+
+.art[data-motion='float'] {
+  animation: float 6s ease-in-out infinite alternate;
+}
+
+.art[data-motion='flicker'] {
+  transform-origin: bottom center;
+  animation: flicker 1.6s ease-in-out infinite alternate;
+}
+
+.art[data-motion='pulse'] {
+  animation: pulse 2.8s ease-in-out infinite;
+}
+
+.art[data-motion='spin'] {
+  animation: spin 60s linear infinite;
+}
+
+.layer[data-motion='reduce'] .art {
+  animation: none;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translate(-6px, -4px) rotate(-3deg);
+  }
+  to {
+    transform: translate(6px, 6px) rotate(3deg);
+  }
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.02, 0.97);
+  }
+  100% {
+    transform: scale(0.98, 1.04);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

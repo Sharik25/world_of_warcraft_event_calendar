@@ -119,13 +119,22 @@ describe('Today view', () => {
     const { router } = renderRoute('/anniversary/today');
     await screen.findByRole('heading', { level: 1 });
 
+    // Like a person, wait for each day to render before the next key press.
+    const dayShown = (date: string) =>
+      waitFor(() => expect(document.querySelector(`time[datetime="${date}"]`)).toBeInTheDocument());
+
     await user.click(screen.getByRole('link', { name: 'Next day' }));
+    await dayShown('2026-10-28');
     expect(router.state.location.pathname).toBe('/anniversary/day/2026-10-28');
 
-    await user.keyboard('{ArrowLeft}{ArrowLeft}');
+    await user.keyboard('{ArrowLeft}');
+    await dayShown('2026-10-27');
+    await user.keyboard('{ArrowLeft}');
+    await dayShown('2026-10-26');
     expect(router.state.location.pathname).toBe('/anniversary/day/2026-10-26');
 
     await user.keyboard('t');
+    await dayShown('2026-10-27');
     expect(router.state.location.pathname).toBe('/anniversary/today');
   });
 
@@ -154,5 +163,50 @@ describe('Today view', () => {
       vi.advanceTimersByTime(60 * 60_000);
     });
     expect(screen.getByText('Ends in 4d 21h')).toBeInTheDocument();
+  });
+});
+
+describe('event themes', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(NOW);
+  });
+  afterEach(() => vi.useRealTimers());
+
+  it("decorates Hallow's End with art, a numeral ornament and ember particles", async () => {
+    const { container } = renderRoute('/anniversary/today');
+    await screen.findByRole('heading', { level: 1, name: "Hallow's End" });
+    // Minimal set: cobweb, spider and two bats (no large corner objects).
+    await waitFor(() => expect(screen.getByTestId('decorations-layer').children).toHaveLength(4));
+    expect(container.querySelector('[data-kind="embers"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-placement="corner"] svg')).toBeInTheDocument();
+  });
+
+  it('drops particles and stills decorations when reduced motion is on', async () => {
+    const { container } = renderRoute('/anniversary/today', { reducedMotion: 'on' });
+    await screen.findByRole('heading', { level: 1, name: "Hallow's End" });
+    await waitFor(() =>
+      expect(screen.getByTestId('decorations-layer')).toHaveAttribute('data-motion', 'reduce'),
+    );
+    expect(container.querySelector('[data-kind]')).not.toBeInTheDocument();
+  });
+
+  it("dresses 'Also on this day' cards in their own event theme with an emblem", async () => {
+    renderRoute('/anniversary/day/2026-11-15'); // Darkmoon Faire + fishing
+    await screen.findByRole('heading', { level: 1, name: 'Darkmoon Faire' });
+    const link = screen.getByRole('link', { name: 'Stranglethorn Fishing Extravaganza' });
+    const card = link.closest('article') as HTMLElement;
+    expect(card).toHaveAttribute('data-theme', 'fishing');
+    await waitFor(() => expect(card.querySelector('[aria-hidden="true"] svg')).toBeInTheDocument());
+  });
+
+  it('uses Winter Veil art in December', async () => {
+    renderRoute('/anniversary/day/2026-12-20');
+    await screen.findByRole('heading', { level: 1, name: 'Feast of Winter Veil' });
+    await waitFor(() =>
+      expect(
+        document.querySelector('[data-theme="winter-veil"] [data-kind="snow"]'),
+      ).toBeInTheDocument(),
+    );
   });
 });
