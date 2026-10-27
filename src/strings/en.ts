@@ -4,6 +4,20 @@ export const strings = {
     name: "Innkeeper's Almanac",
     tagline: 'What is happening in Azeroth today — pull up a chair by the hearth.',
   },
+  common: {
+    close: 'Close',
+    unconfirmed: 'Unconfirmed',
+    unconfirmedHint: 'Date not yet confirmed for this version. Check the in-game calendar.',
+  },
+  actionBar: {
+    label: 'Views and actions',
+    day: 'Day',
+    week: 'Week',
+    month: 'Month',
+    version: 'Version',
+    more: 'More',
+    today: 'Today',
+  },
   settings: {
     region: 'Server region',
     serverTime: (region: string) => `${region} server time`,
