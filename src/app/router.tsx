@@ -2,6 +2,7 @@ import { createBrowserRouter, type RouteObject } from 'react-router';
 import { MonthView } from '@/features/month/MonthView';
 import { TodayView } from '@/features/today/TodayView';
 import { WeekView } from '@/features/week/WeekView';
+import { ROUTER_BASENAME } from '@/lib/base';
 import type { ViewMode } from './paths';
 import {
   dayLoader,
@@ -45,4 +46,4 @@ export const routes: RouteObject[] = [
   { path: '*', Component: NotFound },
 ];
 
-export const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(routes, { basename: ROUTER_BASENAME });

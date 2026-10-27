@@ -7,6 +7,7 @@ import {
   type ExportOptions,
 } from '@/engine/ics';
 import { localDateOf } from '@/engine/time';
+import { appBaseUrl } from '@/lib/base';
 import { downloadText } from '@/lib/download';
 import { strings } from '@/strings/en';
 
@@ -15,7 +16,7 @@ export function useCalendarExport(occurrence: Occurrence) {
   const { catalog } = useVersionView();
   const def = catalog[occurrence.eventId];
   const options: ExportOptions = {
-    appUrl: typeof window === 'undefined' ? undefined : window.location.origin,
+    appUrl: typeof window === 'undefined' ? undefined : appBaseUrl(),
     tentativeLabel: strings.calendarExport.tentative,
     locationLabel: strings.eventSheet.location,
   };

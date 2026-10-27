@@ -12,7 +12,11 @@ process.env.VITE_SITE_URL ??= process.env.SITE_URL ?? process.env.URL ?? '';
 
 const APP_NAME = "Innkeeper's Almanac";
 
+// Serve from a subpath on GitHub Pages ("/<repo>/"); "/" everywhere else (dev, tests, Netlify).
+const base = process.env.BASE_PATH ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -23,18 +27,19 @@ export default defineConfig({
         name: APP_NAME,
         short_name: 'Almanac',
         description: 'A cozy fan-made calendar of in-game events for classic World of Warcraft.',
-        start_url: '/',
-        scope: '/',
+        // Relative to the manifest, so the app installs correctly under any base path.
+        start_url: '.',
+        scope: '.',
         display: 'standalone',
         orientation: 'any',
         background_color: '#1c120c',
         theme_color: '#1c120c',
         categories: ['games', 'entertainment', 'lifestyle'],
         icons: [
-          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: `${base}icons/icon-192.png`, sizes: '192x192', type: 'image/png' },
+          { src: `${base}icons/icon-512.png`, sizes: '512x512', type: 'image/png' },
           {
-            src: '/icons/maskable-512.png',
+            src: `${base}icons/maskable-512.png`,
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -44,12 +49,12 @@ export default defineConfig({
       workbox: {
         // App shell + bundled event data + lazy theme chunks + fonts: the whole app works offline.
         globPatterns: ['**/*.{js,css,html,svg,woff2}', 'icons/*.png'],
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`,
         // Calendar feeds are files, not app routes.
-        navigateFallbackDenylist: [/^\/calendars\//],
+        navigateFallbackDenylist: [/\/calendars\//],
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('/calendars/'),
+            urlPattern: ({ url }) => url.pathname.includes('/calendars/'),
             handler: 'NetworkFirst',
             options: { cacheName: 'calendar-feeds', expiration: { maxEntries: 20 } },
           },

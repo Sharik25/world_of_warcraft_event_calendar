@@ -11,7 +11,7 @@ test('installable: manifest with icons, standalone display and theme color', asy
   expect(manifest).toMatchObject({
     name: "Innkeeper's Almanac",
     short_name: 'Almanac',
-    start_url: '/',
+    start_url: '.',
     display: 'standalone',
     theme_color: '#1c120c',
   });
